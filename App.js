@@ -1,9 +1,12 @@
 import React from 'react';
 import {SafeAreaView, View, StatusBar} from 'react-native';
 import {Button} from 'react-native-elements';
+
 import {useAuth} from './AuthProvider';
 import {LogInView} from './LogInView';
 import {AuthProvider} from './AuthProvider';
+import {TasksProvider} from './TasksProvider';
+import {TasksView} from './TasksView';
 
 const App = () => {
   return (
@@ -17,7 +20,7 @@ const App = () => {
 // renders the login view. Otherwise, it renders the tasks view. It must be
 // within an AuthProvider.
 function AppBody() {
-  const {user, logOut} = useAuth();
+  const {user} = useAuth();
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -26,7 +29,9 @@ function AppBody() {
           {user == null ? (
             <LogInView />
           ) : (
-            <Button onPress={logOut} title="Log Out" />
+            <TasksProvider projectId="My Project">
+              <TasksView />
+            </TasksProvider>
           )}
         </View>
       </SafeAreaView>
